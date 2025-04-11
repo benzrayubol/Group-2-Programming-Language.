@@ -1,0 +1,61 @@
+#include <iostream>
+
+void demonstrateStaticAllocation() {
+    int arr[5]; // Static allocation
+    for (int i = 0; i < 5; i++) {
+        arr[i] = i;
+    }
+    
+    std::cout << "Static allocation array: ";
+    for (int i = 0; i < 5; i++) {
+        std::cout << arr[i] << " ";
+    }
+    std::cout << "\n";
+}
+
+void demonstrateDynamicAllocation() {
+    int* arr = new(std::nothrow) int[5]; // Dynamic allocation with error handling
+    if (arr == nullptr) {
+        std::cerr << "Memory allocation failed\n";
+        return;
+    }
+    
+    for (int i = 0; i < 5; i++) {
+        arr[i] = i * 2; // Changed to i*2 to differentiate from static
+    }
+    
+    std::cout << "Dynamic allocation array: ";
+    for (int i = 0; i < 5; i++) {
+        std::cout << arr[i] << " ";
+    }
+    std::cout << "\n";
+    
+    delete[] arr; // Manual deallocation
+}
+
+void demonstrateFixedMemoryLeak() {
+    int* noLeak = new(std::nothrow) int[10]; // Dynamic allocation with error handling
+    if (noLeak == nullptr) {
+        std::cerr << "Memory allocation failed\n";
+        return;
+    }
+    
+    for (int i = 0; i < 10; i++) {
+        noLeak[i] = i + 10;
+    }
+    
+    std::cout << "Fixed memory leak array: ";
+    for (int i = 0; i < 10; i++) {
+        std::cout << noLeak[i] << " ";
+    }
+    std::cout << "\n";
+    
+    delete[] noLeak; // Now properly deleted
+}
+
+int main() {
+    demonstrateStaticAllocation();
+    demonstrateDynamicAllocation();
+    demonstrateFixedMemoryLeak();
+    return 0;
+}
