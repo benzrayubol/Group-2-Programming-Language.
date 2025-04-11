@@ -1,0 +1,38 @@
+import ctypes
+import sys
+
+def memory_leak():
+    leak = []  # Create an empty list
+    for i in range(100000):
+        leak.append(i)  # Continuously append integers to the list
+    
+    print("\n=== Memory Leak Demonstration ===")
+    print(f"Created list with {len(leak):,} integers")
+    print(f"Memory used by list: {sys.getsizeof(leak):,} bytes")
+    print("Note: In Python, memory will be freed when the list goes out of scope")
+    # Explicitly clear the list to demonstrate proper cleanup
+    leak.clear()
+    print("List cleared - memory released")
+
+def safe_pointer_demo():
+    print("\n=== Pointer Safety Demonstration ===")
+    # Create a string buffer
+    buffer = ctypes.create_string_buffer(b"Hello World")
+    ptr = ctypes.cast(buffer, ctypes.POINTER(ctypes.c_char))
+    
+    print(f"Initial pointer value: {ptr.contents.value.decode()}")
+    print(f"Memory address: {ctypes.addressof(buffer)}")
+    
+    # Safe usage - keeping buffer in scope while using pointer
+    print(f"Safe access: {ptr[:5].decode()}...")  # Access first 5 characters
+    
+    # Proper cleanup
+    del buffer
+    print("Buffer deleted - pointer should not be used after this point")
+    print("(In Python, we don't get true dangling pointers like in C)")
+
+if _name_ == "_main_":
+    print("=== Memory Management Demonstrations ===")
+    memory_leak()
+    safe_pointer_demo()
+    print("\n=== All demonstrations complete ===")
