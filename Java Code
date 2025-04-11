@@ -1,0 +1,40 @@
+class Employee {
+    private String name;
+
+    public Employee(String name) {
+        this.name = name;
+    }
+
+    public void show() {
+        System.out.println("Employee Name: " + name);
+    }
+
+    // Modern alternative to finalize() - Cleaner resource management
+    public void cleanUp() {
+        System.out.println("Cleaning up: " + name);
+    }
+}
+
+public class GarbageCollectionExample {
+    public static void main(String[] args) {
+        System.out.println("=== Garbage Collection Demo (Modern Approach) ===");
+        
+        // Create employees
+        Employee emp1 = new Employee("Roselle");
+        Employee emp2 = new Employee("Benz");
+
+        emp1.show();
+        emp2.show();
+
+        // Explicit cleanup (better than finalize())
+        System.out.println("\nPerforming cleanup...");
+        emp1.cleanUp();
+        emp2.cleanUp();
+
+        // Null references (not really needed in this case)
+        emp1 = null;
+        emp2 = null;
+
+        System.out.println("\n=== Program End ===");
+    }
+}
